@@ -1,31 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Indumentaria CoderStore</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <header>
-        <h1>Mi Tienda</h1>
-
+        <h1>Indumentaria CoderStore</h1>
+        <div class="buscador-contenedor">
+            <input type="text" id="buscador" placeholder="Buscar productos...">
+            <select id="filtro-categoria">
+                <option value="todos">Todas</option>
+                <option value="remeras">Remeras</option>
+                <option value="pantalones">Pantalones</option>
+            </select>
+        </div>
+        <button id="btn-ver-carrito">Ver Carrito (<span id="cantidad-carrito">0</span>)</button>
     </header>
-    <main>
-        <p>Bienvenido a nuestra tienda en línea. Aquí encontrarás los mejores productos a los mejores precios.</p>
 
-    
+    <main>
+        <div id="productos-container">
+            <!-- Los productos se cargarán aquí desde JavaScript -->
+            <!-- Cada producto tendrá una estructura así:
+            <div class="producto">
+                <img src="ruta-de-imagen.jpg" alt="Nombre del producto">
+                <h3>Nombre del producto</h3>
+                <p>Categoría: remeras</p>
+                <p class="precio">$2500</p>
+                <button class="btn-agregar">Agregar al Carrito</button>
+            </div>
+            -->
+        </div>
+        
+        <div id="carrito-container" class="oculto">
+            <h2>Mi Carrito</h2>
+            <div id="items-carrito"></div>
+            <div id="total-carrito">Total: $0</div>
+            <button id="btn-comprar">Comprar</button>
+            <button id="btn-vaciar">Vaciar Carrito</button>
+            <button id="btn-cerrar-carrito">Cerrar</button>
+        </div>
     </main>
 
-    <footer>
-
-
-
-    </footer>
-
+    <div id="mensaje-compra" class="oculto">
+        <p>¡Compra realizada con éxito!</p>
+        <button id="btn-cerrar-mensaje">Cerrar</button>
+    </div>
 
     <script src="app.js"></script>
 </body>
-
 </html>
