@@ -236,24 +236,65 @@ document.getElementById("btn-comprar").addEventListener("click", () => {
             showConfirmButton: false
         });
     } else {
-        Swal.fire({
-            icon: 'success',
-            title: '¡Compra realizada con éxito!',
-            text: 'Gracias por tu compra. Pronto recibirás tu pedido.',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar'
-        }).then(() => {
-            carrito = [];
-            guardarCarrito();
-            actualizarCarrito();
-            document.getElementById("carrito-container").className = "oculto";
-        });
+        // Mostrar formulario de compra
+        document.getElementById("formulario-compra").className = "";
+        document.getElementById("carrito-container").className = "oculto";
     }
 });
 
 // Botón para cerrar el mensaje de compra
 document.getElementById("btn-cerrar-mensaje").addEventListener("click", () => {
     document.getElementById("mensaje-compra").className = "oculto";
+});
+
+// Formulario de envío - Cancelar
+document.getElementById("btn-cancelar-compra").addEventListener("click", () => {
+    document.getElementById("formulario-compra").className = "oculto";
+    document.getElementById("carrito-container").className = "";
+});
+
+// Formulario de envío - Confirmar compra
+document.getElementById("form-datos-envio").addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    const nombreCompleto = document.getElementById("nombre-completo").value.trim();
+    const direccionEnvio = document.getElementById("direccion-envio").value.trim();
+    
+    if (nombreCompleto === "" || direccionEnvio === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos incompletos',
+            text: 'Por favor completa todos los campos',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        return;
+    }
+    
+    // Mostrar alerta de éxito con los datos
+    Swal.fire({
+        icon: 'success',
+        title: '¡Compra realizada con éxito!',
+        html: `
+            <p>¡Gracias por tu compra, ${nombreCompleto}!</p>
+            <p>Tu pedido se le estará enviando a la brevedad a:</p>
+            <p><strong>${direccionEnvio}</strong></p>
+            <p style="margin-top: 20px; font-size: 14px; color: #666;">Recibirás un email de confirmación pronto.</p>
+        `,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar'
+    }).then(() => {
+        // Limpiar carrito y formulario
+        carrito = [];
+        guardarCarrito();
+        actualizarCarrito();
+        
+        // Limpiar campos del formulario
+        document.getElementById("form-datos-envio").reset();
+        
+        // Ocultar formulario
+        document.getElementById("formulario-compra").className = "oculto";
+    });
 });
 
 // Cargar productos al cargar la página

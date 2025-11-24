@@ -51,6 +51,23 @@
         <button id="btn-cerrar-mensaje">Cerrar</button>
     </div>
 
+    <div id="formulario-compra" class="oculto">
+        <h2>Completar Datos de Envío</h2>
+        <form id="form-datos-envio">
+            <div class="form-group">
+                <label for="nombre-completo">Nombre Completo:</label>
+                <input type="text" id="nombre-completo" name="nombre-completo" required placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="form-group">
+                <label for="direccion-envio">Dirección de Envío:</label>
+                <textarea id="direccion-envio" name="direccion-envio" required placeholder="Ej: Calle Principal 123, Apartamento 4B"></textarea>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" id="btn-confirmar-compra">Confirmar Compra</button>
+                <button type="button" id="btn-cancelar-compra">Cancelar</button>
+            </div>
+        </form>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="app.js"></script>
