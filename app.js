@@ -1,21 +1,31 @@
-// Array de productos - Remeras
-const remeras = [
-    { id: 1, nombre: "Remera Negra", precio: 2500, categoria: "remeras", imagen: "./imagenes/remeranegra.webp" },
-    { id: 2, nombre: "Remera Blanca", precio: 2500, categoria: "remeras", imagen: "./imagenes/remerablanca2.webp" },
-    { id: 3, nombre: "Remera Roja", precio: 2800, categoria: "remeras", imagen: "./imagenes/remeraroja.webp" },
-    { id: 4, nombre: "Remera Azul", precio: 2800, categoria: "remeras", imagen: "./imagenes/remeraazul.webp" }
-];
+// Variable para almacenar todos los productos
+let todosLosProductos = [];
 
-// Array de productos - Pantalones
-const pantalones = [
-    { id: 5, nombre: "Jean Azul", precio: 5000, categoria: "pantalones", imagen: "./imagenes/jeanazul.webp" },
-    { id: 6, nombre: "Jean Negro", precio: 5000, categoria: "pantalones", imagen: "./imagenes/jeannegro.jpg" },
-    { id: 7, nombre: "Cargo Gris", precio: 6000, categoria: "pantalones", imagen: "./imagenes/cargogris.jpg" },
-    { id: 8, nombre: "Cargo Verde", precio: 4500, categoria: "pantalones", imagen: "./imagenes/cargoverde.jpg" }
-];
-
-// Unir todos los productos en un solo array
-const todosLosProductos = [...remeras, ...pantalones];
+// Función para cargar productos desde el JSON
+const cargarProductos = async () => {
+    try {
+        const respuesta = await fetch('./productos.json');
+        if (!respuesta.ok) {
+            throw new Error('Error al cargar el archivo de productos');
+        }
+        const datos = await respuesta.json();
+        
+        // Combinar remeras y pantalones en un solo array
+        todosLosProductos = [...datos.remeras, ...datos.pantalones];
+        
+        // Mostrar los productos después de cargar
+        mostrarProductos(todosLosProductos);
+    } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudieron cargar los productos',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    }
+};
 
 // Carrito de compras (cargado desde localStorage o array vacío al inicio)
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -66,6 +76,15 @@ const agregarAlCarrito = (id) => {
     
     guardarCarrito();
     actualizarCarrito();
+    
+    // Mostrar alerta de SweetAlert
+    Swal.fire({
+        icon: 'success',
+        title: '¡Producto agregado!',
+        text: `${producto.nombre} fue añadido al carrito`,
+        timer: 2000,
+        showConfirmButton: false
+    });
 };
 
 // Función para actualizar la vista del carrito
@@ -180,25 +199,55 @@ document.getElementById("btn-cerrar-carrito").addEventListener("click", () => {
 
 // Botón para vaciar el carrito
 document.getElementById("btn-vaciar").addEventListener("click", () => {
-    const confirmar = confirm("¿Estás seguro de vaciar el carrito?");
-    
-    if (confirmar) {
-        carrito = [];
-        guardarCarrito();
-        actualizarCarrito();
-    }
+    Swal.fire({
+        title: '¿Vaciar carrito?',
+        text: '¿Estás seguro de que deseas vaciar el carrito?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, vaciar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            carrito = [];
+            guardarCarrito();
+            actualizarCarrito();
+            
+            Swal.fire({
+                icon: 'success',
+                title: '¡Carrito vaciado!',
+                text: 'Tu carrito ha sido vaciado correctamente',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    });
 });
 
 // Botón para realizar la compra
 document.getElementById("btn-comprar").addEventListener("click", () => {
     if (carrito.length === 0) {
-        alert("El carrito está vacío");
+        Swal.fire({
+            icon: 'error',
+            title: 'Carrito vacío',
+            text: 'No hay productos en tu carrito para realizar la compra',
+            timer: 2000,
+            showConfirmButton: false
+        });
     } else {
-        document.getElementById("mensaje-compra").className = "";
-        carrito = [];
-        guardarCarrito();
-        actualizarCarrito();
-        document.getElementById("carrito-container").className = "oculto";
+        Swal.fire({
+            icon: 'success',
+            title: '¡Compra realizada con éxito!',
+            text: 'Gracias por tu compra. Pronto recibirás tu pedido.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+        }).then(() => {
+            carrito = [];
+            guardarCarrito();
+            actualizarCarrito();
+            document.getElementById("carrito-container").className = "oculto";
+        });
     }
 });
 
@@ -207,5 +256,5 @@ document.getElementById("btn-cerrar-mensaje").addEventListener("click", () => {
     document.getElementById("mensaje-compra").className = "oculto";
 });
 
-// Mostrar todos los productos al cargar la página
-mostrarProductos(todosLosProductos);
+// Cargar productos al cargar la página
+cargarProductos();

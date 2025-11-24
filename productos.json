@@ -1,0 +1,62 @@
+{
+  "remeras": [
+    {
+      "id": 1,
+      "nombre": "Remera Negra",
+      "precio": 2500,
+      "categoria": "remeras",
+      "imagen": "./imagenes/remeranegra.webp"
+    },
+    {
+      "id": 2,
+      "nombre": "Remera Blanca",
+      "precio": 2500,
+      "categoria": "remeras",
+      "imagen": "./imagenes/remerablanca2.webp"
+    },
+    {
+      "id": 3,
+      "nombre": "Remera Roja",
+      "precio": 2800,
+      "categoria": "remeras",
+      "imagen": "./imagenes/remeraroja.webp"
+    },
+    {
+      "id": 4,
+      "nombre": "Remera Azul",
+      "precio": 2800,
+      "categoria": "remeras",
+      "imagen": "./imagenes/remeraazul.webp"
+    }
+  ],
+  "pantalones": [
+    {
+      "id": 5,
+      "nombre": "Jean Azul",
+      "precio": 5000,
+      "categoria": "pantalones",
+      "imagen": "./imagenes/jeanazul.webp"
+    },
+    {
+      "id": 6,
+      "nombre": "Jean Negro",
+      "precio": 5000,
+      "categoria": "pantalones",
+      "imagen": "./imagenes/jeannegro.jpg"
+    },
+    {
+      "id": 7,
+      "nombre": "Cargo Gris",
+      "precio": 6000,
+      "categoria": "pantalones",
+      "imagen": "./imagenes/cargogris.jpg"
+    },
+    {
+      "id": 8,
+      "nombre": "Cargo Verde",
+      "precio": 4500,
+      "categoria": "pantalones",
+      "imagen": "./imagenes/cargoverde.jpg"
+    }
+  ]
+}
